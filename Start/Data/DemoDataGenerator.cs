@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace UserManagement.Data
@@ -22,6 +23,7 @@ namespace UserManagement.Data
         public async Task ClearAll()
         {
             dc.Users.RemoveRange(await dc.Users.ToArrayAsync());
+            dc.Groups.RemoveRange(await dc.Groups.ToArrayAsync());
             await dc.SaveChangesAsync();
         }
 
@@ -58,7 +60,49 @@ namespace UserManagement.Data
             #endregion
 
             #region Add some groups
-            // Add code to generate demo groups here
+            Group johnAndFamily, lonely, emptyGroup, child;
+            dc.Groups.Add(johnAndFamily = new Group
+            {
+                Name = "John and Family",
+                Members = new List<User>() { john,jane }
+            });
+
+            dc.Groups.Add(lonely = new Group
+            {
+                Name = "Lonely Group",
+                Members = new List<User> { jane }
+            });
+
+            dc.Groups.Add(emptyGroup = new Group
+            {
+                Name = "Empty Group"
+            });
+
+            dc.Groups.Add(child = new Group
+            {
+                Name = "ChildGroup",
+                Members = new List<User> { john, jane},
+                ParentGroup = emptyGroup
+            });
+
+            dc.Groups.Add(new Group
+            {
+                Name = "Nested 2",
+                Members = new List<User> { foo },
+                ParentGroup = child
+            });
+
+            dc.Groups.Add(new Group
+            {
+                Name = "childGroup1",
+                ParentGroup = lonely
+            });
+
+            dc.Groups.Add(new Group
+            {
+                Name = "Nested 4",
+                ParentGroup = child
+            });
             #endregion
 
             await dc.SaveChangesAsync();
