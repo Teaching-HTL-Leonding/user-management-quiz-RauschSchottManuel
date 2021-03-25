@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UserManagement.Data;
 
 namespace UserManagement.Migrations
 {
     [DbContext(typeof(UserManagementDataContext))]
-    partial class UserManagementDataContextModelSnapshot : ModelSnapshot
+    [Migration("20210325094058_Level3Migration")]
+    partial class Level3Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
